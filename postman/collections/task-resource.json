@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "bd826d75-f313-473e-b8d0-b6119b066e78",
+		"name": "task-resource",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "31958257-bd826d75-f313-473e-b8d0-b6119b066e78"
+	},
+	"item": [
+		{
+			"name": "create task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody) //получение переменных \r",
+							"console.log(jsonData.id)\r",
+							"pm.collectionVariables.set(\"id\", jsonData.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains object\", function () {\r",
+							" var jsonData = pm.response.json();\r",
+							" pm.expect(jsonData).to.be.an(\"object\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Accept header is */*\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Accept')).to.eql('*/*');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "8348b3c2-731b-4e99-afb3-4102fa29b22a"
+					}
+				}
+			],
+			"id": "ad536c4e-9b28-4900-820d-18494e82f624",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {},
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwODA2OTI1OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDc5ODI4NTh9.NNHv9Po8OBb006tzuEcCnUi4eHPhEjTIBhvZSd0urQ8xZPUyxJVux1YWFQfkvIpSdHuDdEl9MP3iJNw1wKbtIg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"text\": \"{{$randomWords}}+text\",\n  \"answer\": \"{{$randomWords}}+answer\",\n  \"title\": \"{{$randomWords}}+title\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains array\", function () {\r",
+							" var jsonData = pm.response.json();\r",
+							" pm.expect(jsonData).to.be.an(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Accept header is */*\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Accept')).to.eql('*/*');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "396ba3e7-1176-46a2-af57-3fb504a42653"
+					}
+				}
+			],
+			"id": "bc6e48cf-0494-482e-a62b-4afc993e357c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwODA2OTI1OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDc5ODI4NTh9.NNHv9Po8OBb006tzuEcCnUi4eHPhEjTIBhvZSd0urQ8xZPUyxJVux1YWFQfkvIpSdHuDdEl9MP3iJNw1wKbtIg"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/tasks?page=0&size=20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains object\", function () {\r",
+							" var jsonData = pm.response.json();\r",
+							" pm.expect(jsonData).to.be.an(\"object\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Accept header is */*\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Accept')).to.eql('*/*');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "ec2aa677-91f9-4b7a-ad31-f64b59e0ec6e"
+					}
+				}
+			],
+			"id": "bf1a4b9b-58cb-4c6a-b091-5feea88bbcd2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwODA2OTI1OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDc5ODI4NTh9.NNHv9Po8OBb006tzuEcCnUi4eHPhEjTIBhvZSd0urQ8xZPUyxJVux1YWFQfkvIpSdHuDdEl9MP3iJNw1wKbtIg"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/tasks/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody) //получение переменных \r",
+							"console.log(jsonData.text)\r",
+							"pm.collectionVariables.set(\"text\", jsonData.text);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains object\", function () {\r",
+							" var jsonData = pm.response.json();\r",
+							" pm.expect(jsonData).to.be.an(\"object\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Accept header is */*\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Accept')).to.eql('*/*');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "53e2b1a9-a551-4fa4-86c8-cfe499d9d364"
+					}
+				}
+			],
+			"id": "514f3964-709a-4835-9fbc-4e29f9bddc79",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwODA2OTI1OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDc5ODI4NTh9.NNHv9Po8OBb006tzuEcCnUi4eHPhEjTIBhvZSd0urQ8xZPUyxJVux1YWFQfkvIpSdHuDdEl9MP3iJNw1wKbtIg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": {{id}},\n  \"text\": \"{{$randomWords}}+textnew\",\n  \"answer\": \"{{$randomWords}}+answernew\",\n  \"title\": \"{{$randomWords}}+titlenew\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/tasks/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "partial update task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains object\", function () {\r",
+							" var jsonData = pm.response.json();\r",
+							" pm.expect(jsonData).to.be.an(\"object\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Accept header is */*\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Accept')).to.eql('*/*');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "8f38dcfe-46f1-43c4-87f0-77439144778a"
+					}
+				}
+			],
+			"id": "c6f96880-c718-470c-9c0d-97edafc8492d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwODA2OTI1OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDc5ODI4NTh9.NNHv9Po8OBb006tzuEcCnUi4eHPhEjTIBhvZSd0urQ8xZPUyxJVux1YWFQfkvIpSdHuDdEl9MP3iJNw1wKbtIg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": {{id}},\n  \"text\": \"{{text}}\",\n  \"answer\": \"{{$randomWords}}+partupdate\",\n  \"title\": \"{{$randomWords}}+partupdate\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/tasks/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response is empty\", function () {\r",
+							"  var jsonData = pm.response.text();\r",
+							"  pm.expect(jsonData).to.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 300ms\", () => {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "5a8f4e66-9f08-47da-bfcc-1f545d9b41fc"
+					}
+				}
+			],
+			"id": "0aac25e9-0e67-4803-84bc-e510c8940a09",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwODA2OTI1OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDc5ODI4NTh9.NNHv9Po8OBb006tzuEcCnUi4eHPhEjTIBhvZSd0urQ8xZPUyxJVux1YWFQfkvIpSdHuDdEl9MP3iJNw1wKbtIg"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/tasks/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "e2ce546f-290e-4c47-8d8a-78a35d613f3c"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "56305fc8-2112-45ae-a79a-2a18b74cd4bc"
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "cd349fad-2353-4e3d-9449-d6db965aafa5",
+			"key": "id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "79a0175c-9192-48e3-9d98-531ff3cee4cb",
+			"key": "text",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
